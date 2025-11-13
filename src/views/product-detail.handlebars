@@ -1,0 +1,30 @@
+<div class="product-detail">
+  <h1>{{product.title}}</h1>
+  <p>{{product.description}}</p>
+  <p>Precio: ${{product.price}}</p>
+  <p>Categoría: {{product.category}}</p>
+  <p>Stock: {{product.stock}}</p>
+  <p>Estado: {{#if product.status}}Disponible{{else}}No disponible{{/if}}</p>
+  
+  <button onclick="addToCart('{{product._id}}')">Agregar al carrito</button>
+  <a href="/products">Volver a productos</a>
+</div>
+
+<script>
+  function addToCart(productId) {
+    fetch('/api/carts/65d0a1b4c8e9f8a7c4f3b2a1/products/' + productId, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ quantity: 1 })
+    })
+    .then(response => response.json())
+    .then(data => {
+      alert('Producto agregado al carrito');
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+  }
+</script>
